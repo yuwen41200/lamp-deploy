@@ -10,7 +10,17 @@ Automatically deploy web services using the LAMP model.
 + Remove the `.htaccess` file.
 
 ## Getting Started ##
-TBA.
+For the first time you run the script, execute the following command first:
+```bash
+$ git clone https://github.com/yuwen41200/lamp-deployment-script.git
+$ chmod +x lamp-deployment-script/deploy
+$ sudo cp lamp-deployment-script/deploy /usr/local/bin/
+```
+From now on, you can simply use:
+```bash
+$ deploy run
+$ #TBA
+```
 
 ## Requirements ##
 TBA.

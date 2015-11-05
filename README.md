@@ -58,5 +58,20 @@ You can simply run `dep pull`:
 To show the manual of the command, run `dep help`. It will:
 + Print its usage.
 
+## Requirement ##
+
+Your development environment must have:
++ GNU/Linux-based System
++ PHP Interpreter
++ SSH Client
++ Git Client
+
+Your production server and test server must have:
++ GNU/Linux-based System
++ Apache Server
++ MySQL Server
++ PHP Interpreter
++ SSH Server
+
 ## License ##
 [The MIT License](https://raw.githubusercontent.com/yuwen41200/lamp-deployment-script/master/LICENSE)

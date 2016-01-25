@@ -7,8 +7,8 @@ Automatically Deploy LAMP-Based Web Services
 You can install it by executing the following command:
 
 ```bash
-git clone https://github.com/yuwen41200/lamp-deploy.git
-sudo cp lamp-deploy/dep.jar /usr/local/bin/
+wget https://github.com/yuwen41200/lamp-deploy/raw/master/out/production/lamp-deploy/dep.jar
+sudo mv dep.jar /usr/local/bin/
 echo "alias dep='java -jar /usr/local/bin/dep.jar'" >> ~/.bashrc
 source ~/.bashrc
 ```
@@ -30,7 +30,7 @@ source ~/.bashrc
     * If file `.depcfg` does not exists, print an error message `DEP_NOT_CONFIGURED`.
     * Add `.depcfg` to `.gitignore` if it has not been added, then execute `git add --all`.
     * Prompt you to fill in the commit message, then execute `git commit -m "MY_CMT_MSG"`.
-    * Execute `git push -u origin YOUR_BRANCH` and fill in the username and password for you.
+    * Execute `git push -u origin MY_BRANCH` and fill in the username and password for you.
     * Add an `.htaccess` file to the production server to deny access temporarily.
     * Remove all files in the project root directory on the production server.
     * Use `scp` to copy all local files to the production server.
@@ -51,7 +51,7 @@ Your production server should have:
 + Unix-like System
 + Apache Server
 + MySQL Server
-+ PHP Interpreter
++ PHP Interpreter, Python Interpreter, Perl Interpreter, etc.
 + SSH Server
 
 ## License ##

@@ -7,9 +7,9 @@ Automatically Deploy LAMP-Based Web Services
 You can install it by executing the following command:
 
 ```bash
-wget https://github.com/yuwen41200/lamp-deploy/raw/master/out/production/lamp-deploy/dep.jar
+wget https://github.com/yuwen41200/lamp-deploy/raw/master/release/dep.jar
 sudo mv dep.jar /usr/local/bin/
-echo "alias dep='java -jar /usr/local/bin/dep.jar'" >> ~/.bashrc
+printf "\nalias dep='java -jar /usr/local/bin/dep.jar'\n" >> ~/.bashrc
 source ~/.bashrc
 ```
 

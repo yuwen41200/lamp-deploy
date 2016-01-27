@@ -52,15 +52,4 @@ public class Dep {
 			throw new NotAnActionException("NOT_AN_ACTION");
 		}
 	}
-
-	public static void test() {
-		try {
-			Dep.exec(new InitAction());
-			System.exit(0);
-		}
-		catch (NotAnActionException e) {
-			System.err.println("The program is broken.");
-			System.exit(1);
-		}
-	}
 }

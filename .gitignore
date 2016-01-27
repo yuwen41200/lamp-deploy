@@ -4,3 +4,4 @@
 
 # Gradle Excluded Files
 .gradle/
+build/

@@ -10,9 +10,9 @@ public class Dep {
 		if (args.length == 0) {
 			try {
 				Dep.exec(new GitAction());
-				System.out.println("\u001b[1;32mAction `git` has been successfully completed.\u001b[0m");
+				System.out.println("\u001b[0;32mAction `git` has been successfully completed.\u001b[0m");
 				Dep.exec(new SrvAction());
-				System.out.println("\u001b[1;32mAction `srv` has been successfully completed.\u001b[0m");
+				System.out.println("\u001b[0;32mAction `srv` has been successfully completed.\u001b[0m");
 				System.exit(0);
 			}
 			catch (NotAnActionException e) {
@@ -27,7 +27,7 @@ public class Dep {
 				Constructor<?> constructor = found.getConstructor();
 				Object instance = constructor.newInstance();
 				Dep.exec(instance);
-				System.out.println("\u001b[1;32mAction `" + arg + "` has been successfully " +
+				System.out.println("\u001b[0;32mAction `" + arg + "` has been successfully " +
 						"completed.\u001b[0m");
 			}
 			catch (ClassNotFoundException e) {
@@ -45,7 +45,7 @@ public class Dep {
 		}
 	}
 
-	public static void exec(Object object) throws NotAnActionException {
+	private static void exec(Object object) throws NotAnActionException {
 		if (object instanceof Action) {
 			Action action = (Action) object;
 			action.getStatus();

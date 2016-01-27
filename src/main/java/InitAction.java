@@ -7,14 +7,19 @@ import java.io.*;
 import java.nio.charset.*;
 import java.nio.file.*;
 import java.util.*;
+import javax.xml.bind.*;
 import org.json.*;
 
 public class InitAction implements Action {
 	private String GIT_USR;
 	private String GIT_PWD;
+	private String GIT_IV;
+	private String GIT_SALT;
 	private String GIT_BRANCH;
 	private String SRV_USR;
 	private String SRV_PWD;
+	private String SRV_IV;
+	private String SRV_SALT;
 	private String SRV_IP;
 	private String SRV_PATH;
 
@@ -30,6 +35,11 @@ public class InitAction implements Action {
 	@Override
 	public void run() {
 		Scanner scanner = new Scanner(System.in);
+		BlockCipher blockCipher;
+		String pwd = null;
+		byte[] cipherText;
+		byte[] initializationVector;
+		byte[] salt;
 		System.out.println("Setting up for your git repository.");
 		System.out.print("Username: ");
 		if (scanner.hasNextLine())
@@ -53,6 +63,26 @@ public class InitAction implements Action {
 		System.out.print("Project Root Path: ");
 		if (scanner.hasNextLine())
 			SRV_PATH = scanner.nextLine();
+		System.out.println("Please enter a password.");
+		System.out.println("The passwords for your git repository and production server " +
+				"will be encrypted using this password.");
+		System.out.println("You should remember this password because it will not be " +
+				"stored in your disk.");
+		if (scanner.hasNextLine())
+			pwd = scanner.nextLine();
+		blockCipher = new BlockCipher(pwd);
+		cipherText = blockCipher.encrypt(GIT_PWD);
+		GIT_PWD = DatatypeConverter.printBase64Binary(cipherText);
+		initializationVector = blockCipher.getInitializationVector();
+		GIT_IV = DatatypeConverter.printBase64Binary(initializationVector);
+		salt = blockCipher.getSalt();
+		GIT_SALT = DatatypeConverter.printBase64Binary(salt);
+		cipherText = blockCipher.encrypt(SRV_PWD);
+		SRV_PWD = DatatypeConverter.printBase64Binary(cipherText);
+		initializationVector = blockCipher.getInitializationVector();
+		SRV_IV = DatatypeConverter.printBase64Binary(initializationVector);
+		salt = blockCipher.getSalt();
+		SRV_SALT = DatatypeConverter.printBase64Binary(salt);
 	}
 
 	@Override
@@ -63,12 +93,20 @@ public class InitAction implements Action {
 				.value(GIT_USR)
 				.key("GIT_PWD")
 				.value(GIT_PWD)
+				.key("GIT_IV")
+				.value(GIT_IV)
+				.key("GIT_SALT")
+				.value(GIT_SALT)
 				.key("GIT_BRANCH")
 				.value(GIT_BRANCH)
 				.key("SRV_USR")
 				.value(SRV_USR)
 				.key("GRV_PWD")
 				.value(SRV_PWD)
+				.key("SRV_IV")
+				.value(SRV_IV)
+				.key("SRV_SALT")
+				.value(SRV_SALT)
 				.key("SRV_IP")
 				.value(SRV_IP)
 				.key("SRV_PATH")

@@ -13,6 +13,10 @@ printf "\nalias dep='java -jar /usr/local/bin/dep-1.0.0.jar'\n" >> ~/.bashrc
 source ~/.bashrc
 ```
 
+Download and install [the JCE file][1] if you are encountering the following error message:
+
+`java.security.InvalidKeyException: Illegal key size or default parameters`
+
 ## Usage ##
 
 1. Switch to your project root directory by `cd /path/to/my/proj/`.
@@ -23,6 +27,7 @@ source ~/.bashrc
     * Prompt you to input the username, password, default branch for your git repository.
     * Prompt you to input the username, password, IP address for your production server.
     * Prompt you to input the project root path on your production server.
+    * AES encryption for your passwords based on your independent password.
     * Store these settings into `.depcfg` and add this file to `.gitignore`.
 
 3. Run `dep` to deploy your project.
@@ -57,3 +62,5 @@ Your production server should have:
 ## License ##
 
 The MIT License
+
+[1]: http://www.oracle.com/technetwork/java/javase/downloads/jce8-download-2133166.html

@@ -1,3 +1,6 @@
 # IntelliJ IDEA Project Files
 .idea/
 *.iml
+
+# Gradle Excluded Files
+.gradle/

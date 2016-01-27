@@ -1,0 +1,35 @@
+group 'net.nctucs.ywpu'
+version '1.0.0'
+
+apply plugin: 'java'
+
+jar {
+	baseName 'dep'
+	version '1.0.0'
+	manifest {
+		attributes 'Main-Class': 'Dep'
+	}
+	from {
+		configurations.compile.collect {
+			it.isDirectory() ? it : zipTree(it)
+		}
+	}
+}
+
+repositories {
+	mavenCentral()
+}
+
+dependencies {
+	compile 'org.json:json:20151123'
+	compile 'com.hierynomus:sshj:0.15.0'
+}
+
+uploadArchives {
+	repositories {
+		flatDir {
+			dirs 'release'
+		}
+	}
+	return true
+}

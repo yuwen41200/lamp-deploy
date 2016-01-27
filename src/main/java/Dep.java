@@ -10,7 +10,9 @@ public class Dep {
 		if (args.length == 0) {
 			try {
 				Dep.exec(new GitAction());
+				System.out.println("\u001b[1;32mAction `git` has been successfully completed.\u001b[0m");
 				Dep.exec(new SrvAction());
+				System.out.println("\u001b[1;32mAction `srv` has been successfully completed.\u001b[0m");
 				System.exit(0);
 			}
 			catch (NotAnActionException e) {
@@ -25,6 +27,8 @@ public class Dep {
 				Constructor<?> constructor = found.getConstructor();
 				Object instance = constructor.newInstance();
 				Dep.exec(instance);
+				System.out.println("\u001b[1;32mAction `" + arg + "` has been successfully " +
+						"completed.\u001b[0m");
 			}
 			catch (ClassNotFoundException e) {
 				System.err.println("Action `" + arg + "` does not exist.");

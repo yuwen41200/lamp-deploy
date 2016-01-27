@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <ivy-module version="2.0" xmlns:m="http://ant.apache.org/ivy/maven">
-  <info organisation="net.nctucs.ywpu" module="dep" revision="1.0.0" status="integration" publication="20160127195751">
+  <info organisation="net.nctucs.ywpu" module="dep" revision="1.0.0" status="integration" publication="20160128000543">
     <description/>
   </info>
   <configurations>

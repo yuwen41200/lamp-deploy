@@ -20,7 +20,7 @@ public class InitAction implements Action {
 
 	@Override
 	public void getStatus() {
-		Path gitPath = Paths.get(".git");
+		Path gitPath = Paths.get(System.getProperty("user.dir") + "/.git");
 		if (Files.notExists(gitPath, LinkOption.NOFOLLOW_LINKS)) {
 			System.err.println("INVALID_GIT_REPOSITORY");
 			System.exit(1);
@@ -30,25 +30,27 @@ public class InitAction implements Action {
 	@Override
 	public void run() {
 		Scanner scanner = new Scanner(System.in);
-		System.out.println("Please input the username for your git repository:");
+		System.out.println("Setting up for your git repository.");
+		System.out.print("Username: ");
 		if (scanner.hasNextLine())
 			GIT_USR = scanner.nextLine();
-		System.out.println("Please input the password for your git repository:");
+		System.out.print("Password: ");
 		if (scanner.hasNextLine())
 			GIT_PWD = scanner.nextLine();
-		System.out.println("Please input the default branch for your git repository:");
+		System.out.print("Default Branch: ");
 		if (scanner.hasNextLine())
 			GIT_BRANCH = scanner.nextLine();
-		System.out.println("Please input the username for your production server:");
+		System.out.println("Setting up for your production server.");
+		System.out.print("Username: ");
 		if (scanner.hasNextLine())
 			SRV_USR = scanner.nextLine();
-		System.out.println("Please input the password for your production server:");
+		System.out.print("Password: ");
 		if (scanner.hasNextLine())
 			SRV_PWD = scanner.nextLine();
-		System.out.println("Please input the IP address for your production server:");
+		System.out.print("IP Address: ");
 		if (scanner.hasNextLine())
 			SRV_IP = scanner.nextLine();
-		System.out.println("Please input the project root path on your production server:");
+		System.out.print("Project Root Path: ");
 		if (scanner.hasNextLine())
 			SRV_PATH = scanner.nextLine();
 	}
@@ -73,11 +75,12 @@ public class InitAction implements Action {
 				.value(SRV_PATH)
 			.endObject()
 		.toString();
-		Path depcfgPath = Paths.get(".depcfg");
+		Path depcfgPath = Paths.get(System.getProperty("user.dir") + "/.depcfg");
 		try {
 			Files.write(
 				depcfgPath,
 				jsonString.getBytes(Charset.forName("UTF-8")),
+				StandardOpenOption.CREATE,
 				StandardOpenOption.TRUNCATE_EXISTING
 			);
 		}
@@ -85,11 +88,12 @@ public class InitAction implements Action {
 			e.printStackTrace();
 		}
 		String ignoreString = "\n# LAMP Deployment Tool Configuration File\n.depcfg\n";
-		Path gitignorePath = Paths.get(".gitignore");
+		Path gitignorePath = Paths.get(System.getProperty("user.dir") + "/.gitignore");
 		try {
 			Files.write(
 				gitignorePath,
 				ignoreString.getBytes(Charset.forName("UTF-8")),
+				StandardOpenOption.CREATE,
 				StandardOpenOption.APPEND
 			);
 		}

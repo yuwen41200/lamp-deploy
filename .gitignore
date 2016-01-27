@@ -6,3 +6,6 @@
 .gradle/
 build/
 gradlew.bat
+
+# LAMP Deployment Tool Configuration File
+.depcfg

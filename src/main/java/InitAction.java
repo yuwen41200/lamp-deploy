@@ -35,11 +35,9 @@ public class InitAction implements Action {
 	@Override
 	public void run() {
 		Scanner scanner = new Scanner(System.in);
-		BlockCipher blockCipher;
 		String pwd = null;
-		byte[] cipherText;
-		byte[] initializationVector;
-		byte[] salt;
+		BlockCipher blockCipher;
+		BlockCipher.BlockCipherData blockCipherData;
 		System.out.println("Setting up for your git repository.");
 		System.out.print("Username: ");
 		if (scanner.hasNextLine())
@@ -71,18 +69,14 @@ public class InitAction implements Action {
 		if (scanner.hasNextLine())
 			pwd = scanner.nextLine();
 		blockCipher = new BlockCipher(pwd);
-		cipherText = blockCipher.encrypt(GIT_PWD);
-		GIT_PWD = DatatypeConverter.printBase64Binary(cipherText);
-		initializationVector = blockCipher.getInitializationVector();
-		GIT_IV = DatatypeConverter.printBase64Binary(initializationVector);
-		salt = blockCipher.getSalt();
-		GIT_SALT = DatatypeConverter.printBase64Binary(salt);
-		cipherText = blockCipher.encrypt(SRV_PWD);
-		SRV_PWD = DatatypeConverter.printBase64Binary(cipherText);
-		initializationVector = blockCipher.getInitializationVector();
-		SRV_IV = DatatypeConverter.printBase64Binary(initializationVector);
-		salt = blockCipher.getSalt();
-		SRV_SALT = DatatypeConverter.printBase64Binary(salt);
+		blockCipherData = blockCipher.encrypt(GIT_PWD);
+		GIT_PWD = DatatypeConverter.printBase64Binary(blockCipherData.cipherText);
+		GIT_IV = DatatypeConverter.printBase64Binary(blockCipherData.initializationVector);
+		GIT_SALT = DatatypeConverter.printBase64Binary(blockCipherData.salt);
+		blockCipherData = blockCipher.encrypt(SRV_PWD);
+		SRV_PWD = DatatypeConverter.printBase64Binary(blockCipherData.cipherText);
+		SRV_IV = DatatypeConverter.printBase64Binary(blockCipherData.initializationVector);
+		SRV_SALT = DatatypeConverter.printBase64Binary(blockCipherData.salt);
 	}
 
 	@Override
@@ -101,7 +95,7 @@ public class InitAction implements Action {
 				.value(GIT_BRANCH)
 				.key("SRV_USR")
 				.value(SRV_USR)
-				.key("GRV_PWD")
+				.key("SRV_PWD")
 				.value(SRV_PWD)
 				.key("SRV_IV")
 				.value(SRV_IV)

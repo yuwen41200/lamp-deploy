@@ -5,3 +5,4 @@
 # Gradle Excluded Files
 .gradle/
 build/
+gradlew.bat

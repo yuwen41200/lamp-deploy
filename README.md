@@ -15,7 +15,9 @@ source ~/.bashrc
 
 Download and install [the JCE file][1] if you are encountering the following error message:
 
-`java.security.InvalidKeyException: Illegal key size or default parameters`
+```bash
+java.security.InvalidKeyException: Illegal key size or default parameters
+```
 
 ## Usage ##
 

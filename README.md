@@ -48,17 +48,11 @@ java.security.InvalidKeyException: Illegal key size or default parameters
 
 Your development environment should have:
 
-+ Unix-like System
-+ SSH Client
-+ Git Client
 + Java Runtime Environment
 
 Your production server should have:
 
-+ Unix-like System
-+ Apache Server
 + MySQL Server
-+ PHP Interpreter, Python Interpreter, Perl Interpreter, etc.
 + SSH Server
 
 ## License ##

@@ -4,7 +4,7 @@ Automatically Deploy LAMP-Based Web Services
 
 ## Getting Started ##
 
-You can install it by executing the following command:
+You can install it by executing the following commands:
 
 ```bash
 wget https://github.com/yuwen41200/lamp-deploy/raw/master/release/dep-1.0.0.jar
@@ -25,35 +25,43 @@ java.security.InvalidKeyException: Illegal key size or default parameters
 
 2. Run `dep init` to setup a new configuration.
 
-    * If directory `.git` does not exist, print an error message `INVALID_GIT_REPOSITORY`.
-    * Prompt you to input the username, password, default branch for your git repository.
-    * Prompt you to input the username, password, IP address for your production server.
-    * Prompt you to input the project root path on your production server.
-    * AES encryption for your passwords based on your independent password.
-    * Store these settings into `.depcfg` and add this file to `.gitignore`.
+    * Check if directory `.git` exists.
+    * Prompt you to input the information of your Git repository and production server.
+    * AES encryption for your passwords based on another independent password.
+    * Store your settings into `.depcfg` and add the file to `.gitignore`.
 
 3. Run `dep` to deploy your project.
 
-    * If file `.depcfg` does not exist, print an error message `DEP_NOT_CONFIGURED`.
-    * Add `.depcfg` to `.gitignore` if it has not been added, then execute `git add --all`.
-    * Prompt you to fill in the commit message, then execute `git commit -m "MY_CMT_MSG"`.
-    * Execute `git push -u origin MY_BRANCH` and fill in the username and password for you.
+    * Check if file `.depcfg` exists.
+    * Add `.depcfg` to `.gitignore` if it has not been added.
+    * Commit all changes and prompt you to fill in the commit message.
+    * Push to the default branch of your remote repository.
     * Add an `.htaccess` file to the production server to deny access temporarily.
     * Remove all files in the project root directory on the production server.
-    * Use `scp` to copy all local files to the production server.
-    * Load SQL queries in `runonce.sql` on the production server.
+    * Use SCP to copy all local files to the production server.
+    * If file `runonce.sql` exists, load the SQL queries in the file.
     * Remove the `.htaccess` file on the production server.
+
+## Customize ##
+
+You can easily extend it by implementing the Action interface.  
+After that, use the following commands to build:
+
+```bash
+./gradlew build
+./gradlew upload
+```
 
 ## Requirement ##
 
-Your development environment should have:
++ Your development environment should have:
 
-+ Java Runtime Environment
+    * Java Runtime Environment
 
-Your production server should have:
++ Your production server should have:
 
-+ MySQL Server
-+ SSH Server
+    * MySQL Server
+    * SSH Server
 
 ## License ##
 

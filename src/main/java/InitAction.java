@@ -22,12 +22,18 @@ public class InitAction implements Action {
 	private String SRV_SALT;
 	private String SRV_IP;
 	private String SRV_PATH;
+	private String SQL_USR;
+	private String SQL_PWD;
+	private String SQL_IV;
+	private String SQL_SALT;
+	private String SQL_IP;
+	private String SQL_DB;
 
 	@Override
 	public void getStatus() {
-		Path gitPath = Paths.get(System.getProperty("user.dir") + "/.git");
+		Path gitPath = Paths.get(System.getProperty("user.dir") + File.separator + ".git");
 		if (Files.notExists(gitPath, LinkOption.NOFOLLOW_LINKS)) {
-			System.err.println("INVALID_GIT_REPOSITORY");
+			System.err.println("Invalid Git repository.");
 			System.exit(1);
 		}
 	}
@@ -38,7 +44,7 @@ public class InitAction implements Action {
 		String pwd = null;
 		BlockCipher blockCipher;
 		BlockCipher.BlockCipherData blockCipherData;
-		System.out.println("Setting up for your git repository.");
+		System.out.println("Setting up for your Git repository.");
 		System.out.print("Username: ");
 		if (scanner.hasNextLine())
 			GIT_USR = scanner.nextLine();
@@ -48,7 +54,7 @@ public class InitAction implements Action {
 		System.out.print("Default Branch: ");
 		if (scanner.hasNextLine())
 			GIT_BRANCH = scanner.nextLine();
-		System.out.println("Setting up for your production server.");
+		System.out.println("Setting up for your HTTP(S) server.");
 		System.out.print("Username: ");
 		if (scanner.hasNextLine())
 			SRV_USR = scanner.nextLine();
@@ -61,6 +67,19 @@ public class InitAction implements Action {
 		System.out.print("Project Root Path: ");
 		if (scanner.hasNextLine())
 			SRV_PATH = scanner.nextLine();
+		System.out.println("Setting up for your MySQL server.");
+		System.out.print("Username: ");
+		if (scanner.hasNextLine())
+			SQL_USR = scanner.nextLine();
+		System.out.print("Password: ");
+		if (scanner.hasNextLine())
+			SQL_PWD = scanner.nextLine();
+		System.out.print("IP Address: ");
+		if (scanner.hasNextLine())
+			SQL_IP = scanner.nextLine();
+		System.out.print("Default Database: ");
+		if (scanner.hasNextLine())
+			SQL_DB = scanner.nextLine();
 		System.out.println("Please enter a password.");
 		System.out.println("The passwords for your git repository and production server " +
 				"will be encrypted using this password.");
@@ -70,44 +89,56 @@ public class InitAction implements Action {
 			pwd = scanner.nextLine();
 		blockCipher = new BlockCipher(pwd);
 		blockCipherData = blockCipher.encrypt(GIT_PWD);
-		GIT_PWD = DatatypeConverter.printBase64Binary(blockCipherData.cipherText);
-		GIT_IV = DatatypeConverter.printBase64Binary(blockCipherData.initializationVector);
+		GIT_PWD  = DatatypeConverter.printBase64Binary(blockCipherData.cipherText);
+		GIT_IV   = DatatypeConverter.printBase64Binary(blockCipherData.initializationVector);
 		GIT_SALT = DatatypeConverter.printBase64Binary(blockCipherData.salt);
 		blockCipherData = blockCipher.encrypt(SRV_PWD);
-		SRV_PWD = DatatypeConverter.printBase64Binary(blockCipherData.cipherText);
-		SRV_IV = DatatypeConverter.printBase64Binary(blockCipherData.initializationVector);
+		SRV_PWD  = DatatypeConverter.printBase64Binary(blockCipherData.cipherText);
+		SRV_IV   = DatatypeConverter.printBase64Binary(blockCipherData.initializationVector);
 		SRV_SALT = DatatypeConverter.printBase64Binary(blockCipherData.salt);
+		blockCipherData = blockCipher.encrypt(SQL_PWD);
+		SQL_PWD  = DatatypeConverter.printBase64Binary(blockCipherData.cipherText);
+		SQL_IV   = DatatypeConverter.printBase64Binary(blockCipherData.initializationVector);
+		SQL_SALT = DatatypeConverter.printBase64Binary(blockCipherData.salt);
 	}
 
+	// @formatter:off
 	@Override
 	public void setStatus() {
 		String jsonString = new JSONStringer()
 			.object()
-				.key("GIT_USR")
-				.value(GIT_USR)
-				.key("GIT_PWD")
-				.value(GIT_PWD)
-				.key("GIT_IV")
-				.value(GIT_IV)
-				.key("GIT_SALT")
-				.value(GIT_SALT)
-				.key("GIT_BRANCH")
-				.value(GIT_BRANCH)
-				.key("SRV_USR")
-				.value(SRV_USR)
-				.key("SRV_PWD")
-				.value(SRV_PWD)
-				.key("SRV_IV")
-				.value(SRV_IV)
-				.key("SRV_SALT")
-				.value(SRV_SALT)
-				.key("SRV_IP")
-				.value(SRV_IP)
-				.key("SRV_PATH")
-				.value(SRV_PATH)
+				.key("GIT").object()
+					.key("USR").value(GIT_USR)
+					.key("PWD").array()
+						.value(GIT_PWD)
+						.value(GIT_IV)
+						.value(GIT_SALT)
+					.endArray()
+					.key("BRANCH").value(GIT_BRANCH)
+				.endObject()
+				.key("SRV").object()
+					.key("USR").value(SRV_USR)
+					.key("PWD").array()
+						.value(SRV_PWD)
+						.value(SRV_IV)
+						.value(SRV_SALT)
+					.endArray()
+					.key("IP").value(SRV_IP)
+					.key("PATH").value(SRV_PATH)
+				.endObject()
+				.key("SQL").object()
+					.key("USR").value(SQL_USR)
+					.key("PWD").array()
+						.value(SQL_PWD)
+						.value(SQL_IV)
+						.value(SQL_SALT)
+					.endArray()
+					.key("IP").value(SQL_IP)
+					.key("DB").value(SQL_DB)
+				.endObject()
 			.endObject()
 		.toString();
-		Path depcfgPath = Paths.get(System.getProperty("user.dir") + "/.depcfg");
+		Path depcfgPath = Paths.get(System.getProperty("user.dir") + File.separator + ".depcfg");
 		try {
 			Files.write(
 				depcfgPath,
@@ -120,7 +151,7 @@ public class InitAction implements Action {
 			e.printStackTrace();
 		}
 		String ignoreString = "\n# LAMP Deployment Tool Configuration File\n.depcfg\n";
-		Path gitignorePath = Paths.get(System.getProperty("user.dir") + "/.gitignore");
+		Path gitignorePath = Paths.get(System.getProperty("user.dir") + File.separator + ".gitignore");
 		try {
 			Files.write(
 				gitignorePath,
@@ -133,4 +164,5 @@ public class InitAction implements Action {
 			e.printStackTrace();
 		}
 	}
+	// @formatter:on
 }

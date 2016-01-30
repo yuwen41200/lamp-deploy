@@ -49,13 +49,14 @@ public class BlockCipher {
 		return new BlockCipherData(cipherText, initializationVector, salt);
 	}
 
-	public String decrypt(byte[] cipherText, byte[] initializationVector, byte[] salt) {
+	public String decrypt(BlockCipherData blockCipherData) {
 		String plainText = null;
 		try {
-			SecretKey secretKey = init(salt);
+			SecretKey secretKey = init(blockCipherData.salt);
 			Cipher cipher = Cipher.getInstance("AES/CBC/PKCS5Padding");
-			cipher.init(Cipher.DECRYPT_MODE, secretKey, new IvParameterSpec(initializationVector));
-			plainText = new String(cipher.doFinal(cipherText), "UTF-8");
+			cipher.init(Cipher.DECRYPT_MODE, secretKey,
+					new IvParameterSpec(blockCipherData.initializationVector));
+			plainText = new String(cipher.doFinal(blockCipherData.cipherText), "UTF-8");
 		}
 		catch (Exception e) {
 			e.printStackTrace();

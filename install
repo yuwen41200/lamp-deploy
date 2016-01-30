@@ -5,25 +5,25 @@ wget https://github.com/yuwen41200/lamp-deploy/raw/master/release/dep-${ver}.jar
 sudo mv dep-${ver}.jar /usr/local/bin/
 
 config () {
-	if [ -f $1 ]; then
-		sed -i '/alias dep/d' $1
-		newline=$(tail -c 1 $1)
-		if [ "$newline" != "" ]; then
-			printf "\n" >> $1
-		fi
-		case "$2" in
-			1)
-				printf "alias dep='java -jar /usr/local/bin/dep-${ver}.jar'\n" >> $1
-				;;
-			2)
-				printf "alias dep 'java -jar /usr/local/bin/dep-${ver}.jar'\n" >> $1
-				;;
-			*)
-				printf "alias dep='java -jar /usr/local/bin/dep-${ver}.jar'\n" >> $1
-				;;
-		esac
-		source $1
-	fi
+    if [ -f $1 ]; then
+        sed -i '/alias dep/d' $1
+        newline=$(tail -c 1 $1)
+        if [ "$newline" != "" ]; then
+            printf "\n" >> $1
+        fi
+        case "$2" in
+            1)
+                printf "alias dep='java -jar /usr/local/bin/dep-${ver}.jar'\n" >> $1
+                ;;
+            2)
+                printf "alias dep 'java -jar /usr/local/bin/dep-${ver}.jar'\n" >> $1
+                ;;
+            *)
+                printf "alias dep='java -jar /usr/local/bin/dep-${ver}.jar'\n" >> $1
+                ;;
+        esac
+        source $1
+    fi
 }
 
 config ~/.bashrc 1

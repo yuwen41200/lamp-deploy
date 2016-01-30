@@ -13,6 +13,8 @@ printf "\nalias dep='java -jar /usr/local/bin/dep-1.0.0.jar'\n" >> ~/.bashrc
 source ~/.bashrc
 ```
 
+_You may need to replace Bash with your custom shell._
+
 Download and install [the JCE file][1] if you are encountering the following error message:
 
 ```bash
@@ -58,10 +60,14 @@ After that, use the following commands to build:
 
     * Java Runtime Environment
 
+_All functionality is written in Java, so it is unnecessary to install anything else._
+
 + Your production server should have:
 
     * MySQL Server
     * SSH Server
+
+_Despite the name, it should be compatible with many other server platforms._
 
 ## License ##
 

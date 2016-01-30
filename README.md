@@ -4,7 +4,7 @@ Automatically Deploy LAMP-Based Web Services
 
 ## Getting Started ##
 
-You can install it by executing the following commands:
+You can install *LAMP Deployment Tool* by executing the following commands:
 
 ```bash
 wget https://github.com/yuwen41200/lamp-deploy/raw/master/release/dep-1.0.0.jar
@@ -13,7 +13,7 @@ printf "\nalias dep='java -jar /usr/local/bin/dep-1.0.0.jar'\n" >> ~/.bashrc
 source ~/.bashrc
 ```
 
-_You may need to replace Bash with your custom shell._
+> You may need to replace Bash with your custom shell.
 
 Download and install [the JCE file][1] if you are encountering the following error message:
 
@@ -46,7 +46,7 @@ java.security.InvalidKeyException: Illegal key size or default parameters
 
 ## Customize ##
 
-You can easily extend it by implementing the Action interface.  
+You can easily extend *LAMP Deployment Tool* by implementing the Action interface.  
 After that, use the following commands to build:
 
 ```bash
@@ -60,14 +60,14 @@ After that, use the following commands to build:
 
     * Java Runtime Environment
 
-_All functionality is written in Java, so it is unnecessary to install anything else._
+> All functionality is written in Java, so it is unnecessary to install anything else.
 
 + Your production server should have:
 
     * MySQL Server
     * SSH Server
 
-_Despite the name, it should be compatible with many other server platforms._
+> Despite the name, *LAMP Deployment Tool* should be compatible with many other server platforms.
 
 ## License ##
 

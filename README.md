@@ -15,7 +15,7 @@ source ~/.bashrc
 
 > You may need to replace Bash with your custom shell.
 
-Download and install [the JCE file][1] if you are encountering the following error message:
+Download and install [the JCE files][1] if you are encountering the following error message:
 
 ```bash
 java.security.InvalidKeyException: Illegal key size or default parameters
@@ -60,7 +60,7 @@ After that, use the following commands to build:
 
     * Java Runtime Environment
 
-> All functionality is written in Java, so it is unnecessary to install anything else.
+> All the functionality is written in pure Java, so it is unnecessary to install anything else.
 
 + Your production server should have:
 
@@ -71,6 +71,9 @@ After that, use the following commands to build:
 
 ## License ##
 
-The MIT License
+Most of the self-made codes are released under [the MIT license][2].  
+However, **LAMP Deployment Tool** also adopt several open-source libraries.  
+For those libraries, all rights belong to their respective owners.
 
 [1]: http://www.oracle.com/technetwork/java/javase/downloads/jce8-download-2133166.html
+[2]: https://github.com/yuwen41200/lamp-deploy/raw/master/LICENSE

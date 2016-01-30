@@ -87,6 +87,7 @@ public class InitAction implements Action {
 				"stored in your disk.");
 		if (scanner.hasNextLine())
 			pwd = scanner.nextLine();
+		// @formatter:off
 		blockCipher = new BlockCipher(pwd);
 		blockCipherData = blockCipher.encrypt(GIT_PWD);
 		GIT_PWD  = DatatypeConverter.printBase64Binary(blockCipherData.cipherText);
@@ -100,11 +101,12 @@ public class InitAction implements Action {
 		SQL_PWD  = DatatypeConverter.printBase64Binary(blockCipherData.cipherText);
 		SQL_IV   = DatatypeConverter.printBase64Binary(blockCipherData.initializationVector);
 		SQL_SALT = DatatypeConverter.printBase64Binary(blockCipherData.salt);
+		// @formatter:on
 	}
 
-	// @formatter:off
 	@Override
 	public void setStatus() {
+		// @formatter:off
 		String jsonString = new JSONStringer()
 			.object()
 				.key("GIT").object()
@@ -142,7 +144,7 @@ public class InitAction implements Action {
 		try {
 			Files.write(
 				depcfgPath,
-				jsonString.getBytes(Charset.forName("UTF-8")),
+				jsonString.getBytes(StandardCharsets.UTF_8),
 				StandardOpenOption.CREATE,
 				StandardOpenOption.TRUNCATE_EXISTING
 			);
@@ -152,10 +154,23 @@ public class InitAction implements Action {
 		}
 		String ignoreString = "\n# LAMP Deployment Tool Configuration File\n.depcfg\n";
 		Path gitignorePath = Paths.get(System.getProperty("user.dir") + File.separator + ".gitignore");
+		if (Files.exists(gitignorePath, LinkOption.NOFOLLOW_LINKS)) {
+			try {
+				BufferedReader bufferedReader =
+						Files.newBufferedReader(gitignorePath, StandardCharsets.UTF_8);
+				String found;
+				while ((found = bufferedReader.readLine()) != null)
+					if (found.trim().startsWith(".depcfg"))
+						return;
+			}
+			catch (IOException e) {
+				e.printStackTrace();
+			}
+		}
 		try {
 			Files.write(
 				gitignorePath,
-				ignoreString.getBytes(Charset.forName("UTF-8")),
+				ignoreString.getBytes(StandardCharsets.UTF_8),
 				StandardOpenOption.CREATE,
 				StandardOpenOption.APPEND
 			);
@@ -163,6 +178,6 @@ public class InitAction implements Action {
 		catch (IOException e) {
 			e.printStackTrace();
 		}
+		// @formatter:on
 	}
-	// @formatter:on
 }

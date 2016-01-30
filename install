@@ -1,0 +1,6 @@
+#!/bin/bash
+ver=1.0.0
+wget https://github.com/yuwen41200/lamp-deploy/raw/master/release/dep-${ver}.jar
+sudo mv dep-${ver}.jar /usr/local/bin/
+printf "\nalias dep='java -jar /usr/local/bin/dep-${ver}.jar'\n" >> ~/.bashrc
+source ~/.bashrc

@@ -4,16 +4,13 @@ Automatically Deploy LAMP-Based Web Services
 
 ## Getting Started ##
 
-You can install **LAMP Deployment Tool** by executing the following commands:
+You can install **LAMP Deployment Tool** by executing the following command:
 
 ```bash
-wget https://github.com/yuwen41200/lamp-deploy/raw/master/release/dep-1.0.0.jar
-sudo mv dep-1.0.0.jar /usr/local/bin/
-printf "\nalias dep='java -jar /usr/local/bin/dep-1.0.0.jar'\n" >> ~/.bashrc
-source ~/.bashrc
+./install
 ```
 
-> You may need to replace Bash with your custom shell.
+> You may need to replace the shells with your current one in the installation script.
 
 Download and install [the JCE files][1] if you are encountering the following error message:
 

@@ -2,6 +2,8 @@
 
 ver=1.0.0
 wget https://github.com/yuwen41200/lamp-deploy/raw/master/release/dep-${ver}.jar
+sudo chown root:root dep-${ver}.jar
+sudo chmod 755 dep-${ver}.jar
 sudo mv dep-${ver}.jar /usr/local/bin/
 
 config () {
@@ -22,7 +24,6 @@ config () {
                 printf "alias dep='java -jar /usr/local/bin/dep-${ver}.jar'\n" >> $1
                 ;;
         esac
-        source $1
     fi
 }
 
